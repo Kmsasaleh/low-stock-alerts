@@ -2,6 +2,7 @@
 
 class Shop < ActiveRecord::Base
   include ShopifyApp::ShopSessionStorage
+  has_many :variants, dependent: :destroy
 
   def api_version
     ShopifyApp.configuration.api_version
