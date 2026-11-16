@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_07_190537) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_07_191954) do
+  create_table "sale_lines", force: :cascade do |t|
+    t.integer "shop_id", null: false
+    t.integer "variant_id", null: false
+    t.string "shopify_line_item_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "sold_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id", "shopify_line_item_id"], name: "index_sale_lines_on_shop_id_and_shopify_line_item_id", unique: true
+    t.index ["shop_id"], name: "index_sale_lines_on_shop_id"
+    t.index ["variant_id", "sold_at"], name: "index_sale_lines_on_variant_id_and_sold_at"
+    t.index ["variant_id"], name: "index_sale_lines_on_variant_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "shopify_domain", null: false
     t.string "shopify_token", null: false
@@ -47,5 +61,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_07_190537) do
     t.index ["shop_id"], name: "index_variants_on_shop_id"
   end
 
+  add_foreign_key "sale_lines", "shops"
+  add_foreign_key "sale_lines", "variants"
   add_foreign_key "variants", "shops"
 end
