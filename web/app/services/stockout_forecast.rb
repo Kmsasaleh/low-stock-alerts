@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Pure forecast math: given stock on hand and recent sales, how many days
-# until this variant sells out? No database or API calls, so it is fast
-# and easy to unit test.
 class StockoutForecast
   Result = Data.define(:daily_rate, :days_left, :label, :reason)
 

@@ -10,8 +10,6 @@ class OrdersCreateJob < ActiveJob::Base
       return
     end
 
-    # Claim + write in ONE transaction: if the upsert fails, the claim rolls
-    # back too, so Shopify's retry is processed instead of skipped as a duplicate.
     ActiveRecord::Base.transaction do
       next unless ProcessedWebhook.claim(webhook_id: webhook_id, topic: TOPIC, shop_domain: shop_domain)
 
@@ -34,8 +32,6 @@ class OrdersCreateJob < ActiveJob::Base
       {
         shop_id: shop.id,
         variant_id: variant_id,
-        # Same gid format OrdersImporter stores, so the unique index treats
-        # a line item seen by both the importer and this webhook as ONE row.
         shopify_line_item_id: "gid://shopify/LineItem/#{item["id"]}",
         quantity: item["quantity"].to_i,
         sold_at: order["created_at"],

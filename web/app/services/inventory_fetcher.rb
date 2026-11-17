@@ -1,5 +1,5 @@
-# Fetches every inventory-tracked, non-gift-card variant in the shop.
-# Follows cursor pagination until Shopify reports no more pages.
+# frozen_string_literal: true
+
 class InventoryFetcher
   PAGE_SIZE = 100
 

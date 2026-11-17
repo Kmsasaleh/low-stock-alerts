@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Imports recent order line items into sale_lines, one row per line item.
-# Idempotent: rows are upserted on the unique (shop_id, shopify_line_item_id)
-# index, so re-running never double-counts, and refunds update the quantity.
 class OrdersImporter
   ORDERS_PAGE_SIZE = 25
   LINE_ITEMS_PAGE_SIZE = 25

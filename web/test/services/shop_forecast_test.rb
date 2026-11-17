@@ -14,7 +14,7 @@ class ShopForecastTest < ActiveSupport::TestCase
   test "only counts sales inside the window and sorts soonest first" do
     sell(@fast, "li-1", 14, @now - 2.days)
     sell(@slow, "li-2", 7, @now - 3.days)
-    sell(@fast, "li-old", 100, @now - 30.days) # outside the 14-day window
+    sell(@fast, "li-old", 100, @now - 30.days)
 
     rows = ShopForecast.call(shop: @shop, window_days: 14, now: @now)
 

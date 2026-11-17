@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Saves the shop's trackable variants from Shopify into the variants table.
-# One upsert query: inserts new variants and updates existing ones,
-# matched on the unique (shop_id, shopify_gid) index.
 class VariantSync
   def self.call(shop:, session:)
     new(shop, session).call
