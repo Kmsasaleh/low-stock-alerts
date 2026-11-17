@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         get :count
       end
     end
+    get "/forecast", to: "dashboard#forecast"
+    patch "/settings", to: "dashboard#update_settings"
     namespace :webhooks do
       post "/app_uninstalled", to: "app_uninstalled#receive"
       post "/app_scopes_update", to: "app_scopes_update#receive"
