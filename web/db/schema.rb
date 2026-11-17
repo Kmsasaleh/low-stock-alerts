@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_07_191954) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_17_002403) do
+  create_table "processed_webhooks", force: :cascade do |t|
+    t.string "webhook_id", null: false
+    t.string "topic", null: false
+    t.string "shop_domain", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["webhook_id"], name: "index_processed_webhooks_on_webhook_id", unique: true
+  end
+
   create_table "sale_lines", force: :cascade do |t|
     t.integer "shop_id", null: false
     t.integer "variant_id", null: false
