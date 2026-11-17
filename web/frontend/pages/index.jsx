@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useAppBridge } from "@shopify/app-bridge-react";
+import { PrivacyNote } from "../components/PrivacyNote";
 
 const STATUS = {
   urgent: { tone: "critical", text: "Urgent" },
@@ -164,6 +165,7 @@ export default function HomePage() {
       <SummaryBanner urgentCount={data.urgent_count} watchCount={data.watch_count} settings={data.settings} />
       <ForecastTable rows={data.rows} windowDays={data.settings.window_days} />
       <SettingsForm settings={data.settings} onSaved={refetch} />
+      <PrivacyNote retentionDays={data.retention_days} />
     </s-page>
   );
 }

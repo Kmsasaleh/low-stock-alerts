@@ -29,6 +29,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_equal "urgent", body["rows"].first["label"]
     assert_equal 1, body["urgent_count"]
     assert_equal 14, body["settings"]["window_days"]
+    assert_equal 90, body["retention_days"]
   end
 
   test "never returns another shop's products" do

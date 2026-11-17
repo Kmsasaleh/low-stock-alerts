@@ -9,6 +9,7 @@ class DashboardController < AuthenticatedController
       settings: settings_json(setting),
       urgent_count: rows.count { |row| row.forecast.label == :urgent },
       watch_count: rows.count { |row| row.forecast.label == :watch },
+      retention_days: DataRetention::SALE_LINE_RETENTION.in_days.to_i,
       rows: rows.map { |row| row_json(row) },
     })
   end
