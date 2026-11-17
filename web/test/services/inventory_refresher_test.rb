@@ -44,6 +44,18 @@ class InventoryRefresherTest < ActiveSupport::TestCase
     end
   end
 
+  test "without an injected client it uses the shop's auto-refreshing session" do
+    session = stub("session")
+    client = mock("admin_client")
+    client.stubs(:query).returns(stub(body: item(tracked: true, nodes: [{ "id" => GID, "inventoryQuantity" => 46 }])))
+    @shop.expects(:with_shopify_session).yields(session)
+    ShopifyAPI::Clients::Graphql::Admin.expects(:new).with(session: session).returns(client)
+
+    InventoryRefresher.call(shop: @shop, inventory_item_id: 555)
+
+    assert_equal 46, @variant.reload.inventory_quantity
+  end
+
   private
 
   def refresh(body)

@@ -3,7 +3,7 @@
 class InventoryLevelsUpdateJob < ActiveJob::Base
   TOPIC = "inventory_levels/update"
 
-  retry_on InventoryRefresher::Error, wait: :polynomially_longer, attempts: 5
+  retry_on InventoryRefresher::Error, ShopifyAPI::Errors::HttpResponseError, wait: :polynomially_longer, attempts: 5
 
   def perform(shop_domain:, webhook_id:, webhook:)
     shop = Shop.find_by(shopify_domain: shop_domain)
