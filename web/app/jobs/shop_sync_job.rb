@@ -15,5 +15,7 @@ class ShopSyncJob < ActiveJob::Base
       sale_lines = OrdersImporter.call(shop: shop, session: session)
       logger.info("#{self.class} synced '#{shop.shopify_domain}': #{variants} variants, #{sale_lines} sale lines")
     end
+
+    UrgentAlertJob.perform_later(shop.id)
   end
 end

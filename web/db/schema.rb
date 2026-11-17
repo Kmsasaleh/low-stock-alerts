@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_17_005639) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_17_011031) do
   create_table "processed_webhooks", force: :cascade do |t|
     t.string "webhook_id", null: false
     t.string "topic", null: false
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_17_005639) do
     t.integer "inventory_quantity", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "urgent_alerted_at"
     t.index ["shop_id", "shopify_gid"], name: "index_variants_on_shop_id_and_shopify_gid", unique: true
     t.index ["shop_id"], name: "index_variants_on_shop_id"
   end

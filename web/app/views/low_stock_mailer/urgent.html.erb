@@ -1,0 +1,11 @@
+<p>These products will run out within <%= @setting.urgent_days %> days at the current sales rate:</p>
+<ul>
+  <% @rows.each do |row| %>
+    <li>
+      <strong><%= row.variant.display_name %></strong>:
+      <%= row.variant.inventory_quantity %> in stock,
+      <%= row.forecast.reason == :out_of_stock ? "out of stock" : "#{row.forecast.days_left} days left" %>
+    </li>
+  <% end %>
+</ul>
+<p>Open Low-stock alerts in your Shopify admin to see the full forecast.</p>

@@ -16,6 +16,8 @@ class OrdersCreateJob < ActiveJob::Base
       rows = sale_line_rows(shop, webhook)
       SaleLine.upsert_all(rows, unique_by: [:shop_id, :shopify_line_item_id]) if rows.any?
     end
+
+    UrgentAlertJob.perform_later(shop.id)
   end
 
   private

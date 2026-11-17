@@ -22,5 +22,6 @@ class InventoryLevelsUpdateJob < ActiveJob::Base
 
     InventoryRefresher.call(shop: shop, inventory_item_id: inventory_item_id)
     ProcessedWebhook.claim(webhook_id: webhook_id, topic: TOPIC, shop_domain: shop_domain)
+    UrgentAlertJob.perform_later(shop.id)
   end
 end

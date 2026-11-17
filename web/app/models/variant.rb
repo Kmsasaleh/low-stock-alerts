@@ -7,4 +7,10 @@ class Variant < ApplicationRecord
   validates :shopify_gid, presence: true, uniqueness: { scope: :shop_id }
   validates :product_title, presence: true
   validates :inventory_quantity, numericality: { only_integer: true }
+
+  def display_name
+    return product_title if variant_title.blank? || variant_title == "Default Title"
+
+    "#{product_title} – #{variant_title}"
+  end
 end
