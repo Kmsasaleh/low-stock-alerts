@@ -1,0 +1,7 @@
+production:
+  sync_all_shops:
+    command: "Shop.find_each { |shop| ShopSyncJob.perform_later(shop.id) }"
+    schedule: every hour
+  prune_old_data:
+    class: DataRetentionJob
+    schedule: every day at 3am

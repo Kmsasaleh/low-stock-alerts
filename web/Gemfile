@@ -82,3 +82,9 @@ gem "shopify_app", "~> 23.0"
 gem "json", "< 3"
 
 gem "minitest", "< 6", groups: [:development, :test]
+
+group :production do
+  gem "pg", "~> 1.5"
+end
+
+gem "solid_queue", "~> 1.7"

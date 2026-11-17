@@ -1,7 +1,10 @@
 web/frontend/node_modules
 web/frontend/dist
 
-web/Gemfile.lock
+web/.bundle
+web/log
+web/tmp
+web/storage
 web/db/*.sqlite3
 web/config/master.key
 
