@@ -3,9 +3,9 @@
 class ShopForecast
   Row = Data.define(:variant, :units_sold, :forecast)
 
-  def self.call(shop:, window_days: StockoutForecast::DEFAULT_WINDOW_DAYS, now: Time.current)
+  def self.call(shop:, setting: shop.alert_setting, now: Time.current)
     sold = SaleLine
-      .where(shop: shop, sold_at: (now - window_days.days)..now)
+      .where(shop: shop, sold_at: (now - setting.window_days.days)..now)
       .group(:variant_id)
       .sum(:quantity)
 
@@ -14,11 +14,13 @@ class ShopForecast
       forecast = StockoutForecast.call(
         available: variant.inventory_quantity,
         units_sold: units_sold,
-        window_days: window_days,
+        window_days: setting.window_days,
+        urgent_days: setting.urgent_days,
+        watch_days: setting.watch_days,
       )
       Row.new(variant: variant, units_sold: units_sold, forecast: forecast)
     end
 
-    rows.sort_by { |row| row.forecast.days_left || Float::INFINITY }
+    rows.sort_by { |row| [row.forecast.days_left || Float::INFINITY, row.variant.product_title] }
   end
 end

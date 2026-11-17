@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_17_002403) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_17_005639) do
   create_table "processed_webhooks", force: :cascade do |t|
     t.string "webhook_id", null: false
     t.string "topic", null: false
@@ -32,6 +32,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_17_002403) do
     t.index ["shop_id"], name: "index_sale_lines_on_shop_id"
     t.index ["variant_id", "sold_at"], name: "index_sale_lines_on_variant_id_and_sold_at"
     t.index ["variant_id"], name: "index_sale_lines_on_variant_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.integer "shop_id", null: false
+    t.integer "urgent_days", default: 3, null: false
+    t.integer "watch_days", default: 7, null: false
+    t.integer "window_days", default: 14, null: false
+    t.string "alert_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_settings_on_shop_id", unique: true
   end
 
   create_table "shops", force: :cascade do |t|
@@ -72,5 +83,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_17_002403) do
 
   add_foreign_key "sale_lines", "shops"
   add_foreign_key "sale_lines", "variants"
+  add_foreign_key "settings", "shops"
   add_foreign_key "variants", "shops"
 end
