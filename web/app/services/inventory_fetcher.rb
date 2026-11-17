@@ -3,7 +3,7 @@
 class InventoryFetcher
   PAGE_SIZE = 100
 
-  QUERY = <<~GRAPHQL
+  QUERY = <<~GRAPHQL.freeze
     query($cursor: String) {
       productVariants(first: #{PAGE_SIZE}, after: $cursor) {
         nodes {
@@ -19,8 +19,10 @@ class InventoryFetcher
     }
   GRAPHQL
 
-  def self.call(session:)
-    new(session).call
+  class << self
+    def call(session:)
+      new(session).call
+    end
   end
 
   def initialize(session)

@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class UrgentAlerter
-  def self.call(shop:, now: Time.current)
-    new(shop: shop, now: now).call
+  class << self
+    def call(shop:, now: Time.current)
+      new(shop: shop, now: now).call
+    end
   end
 
   def initialize(shop:, now:)

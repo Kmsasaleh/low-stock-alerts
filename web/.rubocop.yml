@@ -1,0 +1,22 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  SuggestExtensions: false
+  Exclude:
+    - "bin/**/*"
+    - "db/schema.rb"
+    - "db/migrate/*_create_solid_queue_tables.rb"
+    - "frontend/**/*"
+    - "node_modules/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+
+Style/ClassMethodsDefinitions:
+  Exclude:
+    - "db/migrate/20220609125627_create_shops.rb"
+    - "db/migrate/20240715093134_create_users.rb"

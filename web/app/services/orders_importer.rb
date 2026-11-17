@@ -4,7 +4,7 @@ class OrdersImporter
   ORDERS_PAGE_SIZE = 25
   LINE_ITEMS_PAGE_SIZE = 25
 
-  QUERY = <<~GRAPHQL
+  QUERY = <<~GRAPHQL.freeze
     query($cursor: String, $search: String) {
       orders(first: #{ORDERS_PAGE_SIZE}, after: $cursor, query: $search, sortKey: CREATED_AT) {
         nodes {
@@ -23,8 +23,10 @@ class OrdersImporter
     }
   GRAPHQL
 
-  def self.call(shop:, session:, since: 60.days.ago)
-    new(shop, session, since).call
+  class << self
+    def call(shop:, session:, since: 60.days.ago)
+      new(shop, session, since).call
+    end
   end
 
   def initialize(shop, session, since)

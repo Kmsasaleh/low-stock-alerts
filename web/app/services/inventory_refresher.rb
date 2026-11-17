@@ -17,12 +17,14 @@ class InventoryRefresher
     }
   GRAPHQL
 
-  def self.call(shop:, inventory_item_id:, client: nil)
-    return new(shop: shop, client: client).call(inventory_item_id) if client
+  class << self
+    def call(shop:, inventory_item_id:, client: nil)
+      return new(shop: shop, client: client).call(inventory_item_id) if client
 
-    shop.with_shopify_session do |session|
-      admin_client = ShopifyAPI::Clients::Graphql::Admin.new(session: session)
-      new(shop: shop, client: admin_client).call(inventory_item_id)
+      shop.with_shopify_session do |session|
+        admin_client = ShopifyAPI::Clients::Graphql::Admin.new(session: session)
+        new(shop: shop, client: admin_client).call(inventory_item_id)
+      end
     end
   end
 

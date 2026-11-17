@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class VariantSync
-  def self.call(shop:, session:)
-    new(shop, session).call
+  class << self
+    def call(shop:, session:)
+      new(shop, session).call
+    end
   end
 
   def initialize(shop, session)

@@ -7,15 +7,17 @@ class StockoutForecast
   DEFAULT_URGENT_DAYS = 3
   DEFAULT_WATCH_DAYS = 7
 
-  def self.call(available:, units_sold:, window_days: DEFAULT_WINDOW_DAYS,
-    urgent_days: DEFAULT_URGENT_DAYS, watch_days: DEFAULT_WATCH_DAYS)
-    new(
-      available: available,
-      units_sold: units_sold,
-      window_days: window_days,
-      urgent_days: urgent_days,
-      watch_days: watch_days,
-    ).call
+  class << self
+    def call(available:, units_sold:, window_days: DEFAULT_WINDOW_DAYS,
+      urgent_days: DEFAULT_URGENT_DAYS, watch_days: DEFAULT_WATCH_DAYS)
+      new(
+        available: available,
+        units_sold: units_sold,
+        window_days: window_days,
+        urgent_days: urgent_days,
+        watch_days: watch_days,
+      ).call
+    end
   end
 
   def initialize(available:, units_sold:, window_days:, urgent_days:, watch_days:)

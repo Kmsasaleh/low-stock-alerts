@@ -16,6 +16,5 @@ module ActiveSupport
     parallelize(workers: :number_of_processors)
 
     fixtures :all
-
   end
 end
