@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post "/customers_redact", to: "customers_redact#receive"
       post "/shop_redact", to: "shop_redact#receive"
       post "/orders_create", to: "orders_create#receive"
+      post "/inventory_levels_update", to: "inventory_levels_update#receive"
     end
   end
 
