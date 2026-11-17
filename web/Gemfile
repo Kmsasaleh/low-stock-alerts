@@ -80,3 +80,5 @@ end
 gem "shopify_app", "~> 23.0"
 
 gem "json", "< 3"
+
+gem "minitest", "< 6", groups: [:development, :test]
