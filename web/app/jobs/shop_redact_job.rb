@@ -2,14 +2,8 @@
 
 class ShopRedactJob < ActiveJob::Base
   def perform(shop_domain:, webhook:)
-    shop = Shop.find_by(shopify_domain: shop_domain)
-
-    if shop.nil?
-      logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
-      return
-    end
-
-    shop.with_shopify_session do
-    end
+    Shop.find_by(shopify_domain: shop_domain)&.destroy!
+    ProcessedWebhook.where(shop_domain: shop_domain).delete_all
+    logger.info("#{self.class}: erased all stored data for '#{shop_domain}'")
   end
 end
